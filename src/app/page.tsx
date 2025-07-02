@@ -1,6 +1,7 @@
 import About from "@/components/About";
 import AboutCoach from "@/components/AboutCoach";
 import Appointment from "@/components/Appointment";
+import BackToTop from "@/components/BackToTop";
 import Blog from "@/components/Blog";
 import ContactInformation from "@/components/ContactInformation";
 import ContactUs from "@/components/ContactUs";
@@ -31,6 +32,7 @@ export default function Home() {
     <MapArea/>
     <ContactInformation/>
     <Footer/>
+    <BackToTop />
    </div>
   );
 }

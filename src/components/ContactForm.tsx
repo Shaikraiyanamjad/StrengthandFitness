@@ -1,4 +1,3 @@
-// components/ContactForm.tsx
 "use client";
 
 import { useState } from "react";
@@ -28,12 +27,18 @@ export default function ContactForm() {
   };
 
   return (
-    <div className="p-8 md:p-12">
-      <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-6">Send Us a Message</h2>
+    <div className="p-6 sm:p-8 md:p-10 lg:p-12">
+      <h2 className="text-xl sm:text-2xl font-bold text-gray-800 dark:text-white mb-6">
+        Send Us a Message
+      </h2>
+
       <form onSubmit={handleSubmit} className="space-y-5">
         {["name", "email", "subject"].map((field) => (
           <div key={field}>
-            <label htmlFor={field} className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+            <label
+              htmlFor={field}
+              className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+            >
               {field.charAt(0).toUpperCase() + field.slice(1)}
             </label>
             <input
@@ -47,8 +52,12 @@ export default function ContactForm() {
             />
           </div>
         ))}
+
         <div>
-          <label htmlFor="message" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+          <label
+            htmlFor="message"
+            className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+          >
             Message
           </label>
           <textarea
@@ -78,7 +87,7 @@ export default function ContactForm() {
         </button>
 
         {submitted && (
-          <div className="flex items-center gap-2 text-green-600 dark:text-green-400">
+          <div className="flex items-center gap-2 text-green-600 dark:text-green-400 mt-2">
             <CheckCircle className="h-5 w-5" />
             Message sent successfully!
           </div>

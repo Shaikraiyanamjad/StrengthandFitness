@@ -1,4 +1,5 @@
 
+import BackToTop from "@/components/BackToTop"
 import ContactInformation from "@/components/ContactInformation"
 import ContactUs from "@/components/ContactUs"
 import Footer from "@/components/Footer"
@@ -14,6 +15,7 @@ const page = () => {
         <MapArea/>
         <ContactInformation/>
         <Footer/>
+        <BackToTop />
     </div>
   )
 }

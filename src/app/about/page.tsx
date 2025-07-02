@@ -1,5 +1,6 @@
 import About from "@/components/About"
 import AboutCoach from "@/components/AboutCoach"
+import BackToTop from "@/components/BackToTop"
 import ContactInformation from "@/components/ContactInformation"
 import Footer from "@/components/Footer"
 import Header from "@/components/Header"
@@ -15,6 +16,7 @@ const page = () => {
         <WhyWorkWithMe />
         <ContactInformation />
         <Footer />
+        <BackToTop />
     </div>
   )
 }

@@ -46,10 +46,10 @@ export default function PeeyushRanjan() {
 
           {/* Text Content with orange highlights */}
           <div className="w-full lg:w-1/2 space-y-6">
-            <p className="text-gray-700 dark:text-gray-300 text-lg leading-relaxed text-justify">
+            <p className="text-gray-700 dark:text-gray-300 text-lg leading-relaxed text-left">
               <span className="text-[#f36100] font-medium">Piyush Ranjan</span>, a dedicated software engineer, came to me with chronic posture-related issues due to long hours at a desk. After a <span className="text-[#f36100] font-medium">customized corrective and strengthening plan</span>, his condition drastically improved.
             </p>
-            <p className="text-gray-700 dark:text-gray-300 text-lg leading-relaxed text-justify">
+            <p className="text-gray-700 dark:text-gray-300 text-lg leading-relaxed text-left">
               He now feels more <span className="text-[#f36100] font-medium">mobile, energetic, and pain-free</span> during both work and daily activities. His journey is a testament to the effectiveness of <span className="text-[#f36100] font-medium">targeted physical therapy</span> and consistent effort.
             </p>
           </div>

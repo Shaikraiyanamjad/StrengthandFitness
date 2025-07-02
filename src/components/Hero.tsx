@@ -35,7 +35,7 @@ export default function Hero() {
           />
         ))}
       </div>
-      <div className="max-w-7xl mx-auto w-full flex flex-col lg:flex-row items-center justify-between gap-8 md:gap-12 py-16 z-10">
+      <div className="max-w-7xl mx-auto w-full flex flex-col lg:flex-row items-center justify-between gap-8 md:gap-12 py-10 z-10">
         {/* Left Content */}
         <motion.div
           className="flex-1 space-y-6 md:space-y-8 text-center lg:text-left order-2 lg:order-1"

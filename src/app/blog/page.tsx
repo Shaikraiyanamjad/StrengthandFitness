@@ -1,3 +1,4 @@
+import BackToTop from "@/components/BackToTop"
 import Blog from "@/components/Blog"
 import ContactInformation from "@/components/ContactInformation"
 import Footer from "@/components/Footer"
@@ -11,6 +12,7 @@ const blogPage = () => {
     <Blog />
     <ContactInformation />
     <Footer />
+    <BackToTop />
     </>
   )
 }
