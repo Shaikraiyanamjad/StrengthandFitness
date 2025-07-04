@@ -44,7 +44,7 @@ export default function Header() {
         {/* Logo */}
         <Link href="/" className="inline-block">
           <Image
-            src={isDarkMode ? "/logo-white.png" : "/logo-black.png"}
+            src={isDarkMode ? "/logo-white2.png" : "/logo-black.png"}
             alt="Logo"
             width={129}
             height={20}
