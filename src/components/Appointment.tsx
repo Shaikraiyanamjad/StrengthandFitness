@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { CheckCircle } from "lucide-react";
+import { Calendar, Clock, CheckCircle } from "lucide-react";
 import { z } from "zod";
 
 const services = [
@@ -130,8 +130,8 @@ export default function Appointment() {
           <Input name="email" type="email" />
 
           <div className="grid grid-cols-2 gap-4">
-            <Input name="date" type="date" icon={CheckCircle} />
-            <Input name="time" type="time" icon={CheckCircle} />
+            <Input name="date" type="date" icon={Calendar} />
+            <Input name="time" type="time" icon={Clock} />
           </div>
 
           <select
