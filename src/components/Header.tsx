@@ -39,7 +39,10 @@ export default function Header() {
   if (!mounted) return null;
 
   return (
-    <header className="sticky top-0 z-50 bg-white/80 dark:bg-black/80 backdrop-blur-lg shadow-md">
+    <header
+      suppressHydrationWarning
+      className="sticky top-0 z-50 bg-white/80 dark:bg-black/80 backdrop-blur-lg shadow-md"
+    >
       <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
         {/* Logo */}
         <Link href="/" className="inline-block">
@@ -69,7 +72,11 @@ export default function Header() {
             Call Now
           </Button>
           {/* Desktop Dark Mode Toggle */}
-          <button onClick={toggleDarkMode} aria-label="Toggle dark mode" className="text-gray-700 dark:text-gray-200">
+          <button
+            onClick={toggleDarkMode}
+            aria-label="Toggle dark mode"
+            className="text-gray-700 dark:text-gray-200"
+          >
             {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
           </button>
         </nav>
@@ -77,7 +84,11 @@ export default function Header() {
         {/* Mobile Icons (Menu + Dark Mode) */}
         <div className="md:hidden flex items-center gap-3">
           {/* Mobile Dark Mode Toggle */}
-          <button onClick={toggleDarkMode} aria-label="Toggle dark mode" className="text-gray-700 dark:text-gray-200">
+          <button
+            onClick={toggleDarkMode}
+            aria-label="Toggle dark mode"
+            className="text-gray-700 dark:text-gray-200"
+          >
             {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
           </button>
           {/* Mobile Menu Toggle */}

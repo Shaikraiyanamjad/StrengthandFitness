@@ -32,13 +32,6 @@ export default function MapArea() {
             title="PhysioFit Clinic Map"
             className="absolute top-0 left-0 w-full h-full"
           ></iframe>
-
-          {/* Fallback Text */}
-          <noscript>
-            <p className="text-center p-4 text-sm text-gray-500 dark:text-gray-400">
-              Map cannot be displayed. Please enable JavaScript in your browser.
-            </p>
-          </noscript>
         </div>
       </div>
     </section>

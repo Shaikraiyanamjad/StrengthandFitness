@@ -1,28 +1,113 @@
 "use client";
+
+import { useState } from "react";
 import { motion } from "framer-motion";
-import { Calendar, Clock } from "lucide-react";
-import { useEffect, useState } from "react";
+import { CheckCircle } from "lucide-react";
+import { z } from "zod";
 
 const services = [
   "Physical Therapy (60 mins)",
   "Corrective Exercise (45 mins)",
   "Rehab Consultation (30 mins)",
-  "Post-Surgical Recovery (60 mins)"
+  "Post-Surgical Recovery (60 mins)",
 ];
 
+const schema = z.object({
+  name: z.string().min(2, "Name is required"),
+  email: z.string().email("Invalid email"),
+  date: z.string().min(1, "Date is required"),
+  time: z.string().min(1, "Time is required"),
+  service: z.string().min(1, "Service is required"),
+});
+
+type FormData = z.infer<typeof schema>;
+
 export default function Appointment() {
-  const [mounted, setMounted] = useState(false);
+  const [form, setForm] = useState<FormData>({
+    name: "",
+    email: "",
+    date: "",
+    time: "",
+    service: "",
+  });
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => setForm({ ...form, [e.target.name]: e.target.value });
 
-  if (!mounted) return null;
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const result = schema.safeParse(form);
+    if (!result.success) {
+      setErrors(
+        Object.fromEntries(
+          Object.entries(result.error.flatten().fieldErrors).map(([k, v]) => [
+            k,
+            v?.[0] || "",
+          ])
+        )
+      );
+      return;
+    }
+    setErrors({});
+    setLoading(true);
+    setSuccess(false);
+
+    try {
+      const res = await fetch("/api/appoint-email", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+      if (!res.ok) throw new Error();
+      setSuccess(true);
+      setForm({ name: "", email: "", date: "", time: "", service: "" });
+    } catch {
+      alert("Failed to book appointment.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const Input = ({
+    name,
+    type = "text",
+    icon: Icon,
+  }: {
+    name: string;
+    type?: string;
+    icon?: React.ElementType;
+  }) => (
+    <div className="relative">
+      {Icon && (
+        <Icon className="absolute left-3 top-3.5 h-5 w-5 text-gray-500" />
+      )}
+      <input
+        type={type}
+        name={name}
+        value={form[name as keyof FormData]}
+        onChange={handleChange}
+        placeholder={
+          name === "name"
+            ? "Full Name"
+            : name === "email"
+              ? "Email"
+              : undefined
+        }
+        className={`w-full ${Icon ? "pl-10" : "px-4"} py-3 rounded-lg border ${errors[name] ? "border-red-500" : "border-gray-300"
+          }`}
+      />
+      {errors[name] && <p className="text-red-500 text-sm">{errors[name]}</p>}
+    </div>
+  );
 
   return (
     <section className="bg-gray-50 dark:bg-gray-900 py-12 px-4">
       <div className="max-w-md mx-auto">
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           className="text-center mb-8"
@@ -35,59 +120,54 @@ export default function Appointment() {
           </p>
         </motion.div>
 
-        <motion.div
+        <motion.form
+          onSubmit={handleSubmit}
           initial={{ y: 20 }}
           whileInView={{ y: 0 }}
-          className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg border border-gray-200 dark:border-gray-700"
+          className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg border border-gray-200 dark:border-gray-700 space-y-4"
         >
-          <form className="space-y-4">
-            <input
-              type="text"
-              placeholder="Full Name"
-              className="w-full px-4 py-3 bg-white dark:bg-gray-700 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#f36100]"
-            />
-            <input
-              type="email"
-              placeholder="Email"
-              className="w-full px-4 py-3 bg-white dark:bg-gray-700 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#f36100]"
-            />
-            <div className="grid grid-cols-2 gap-4">
-              <div className="relative">
-                <Calendar className="absolute left-3 top-3.5 h-5 w-5 text-gray-500 dark:text-gray-400" />
-                <input
-                  type="date"
-                  className="w-full pl-10 pr-4 py-3 bg-white dark:bg-gray-700 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#f36100]"
-                />
-              </div>
-              <div className="relative">
-                <Clock className="absolute left-3 top-3.5 h-5 w-5 text-gray-500 dark:text-gray-400" />
-                <input
-                  type="time"
-                  className="w-full pl-10 pr-4 py-3 bg-white dark:bg-gray-700 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#f36100]"
-                />
-              </div>
-            </div>
-            <select
-              defaultValue=""
-              className="w-full px-4 py-3 bg-white dark:bg-gray-700 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#f36100]"
-            >
-              <option value="" disabled className="text-gray-500 dark:text-gray-400">
-                Select service
+          <Input name="name" />
+          <Input name="email" type="email" />
+
+          <div className="grid grid-cols-2 gap-4">
+            <Input name="date" type="date" icon={CheckCircle} />
+            <Input name="time" type="time" icon={CheckCircle} />
+          </div>
+
+          <select
+            name="service"
+            value={form.service}
+            onChange={handleChange}
+            className={`w-full px-4 py-3 rounded-lg border ${errors.service ? "border-red-500" : "border-gray-300"
+              } bg-white dark:bg-gray-700 text-gray-900 dark:text-white`}
+          >
+            <option value="" disabled>
+              Select service
+            </option>
+            {services.map((s) => (
+              <option key={s} value={s}>
+                {s}
               </option>
-              {services.map((service) => (
-                <option key={service} value={service} className="text-gray-900 dark:text-white">
-                  {service}
-                </option>
-              ))}
-            </select>
-            <button
-              type="submit"
-              className="w-full py-3 bg-[#f36100] hover:bg-[#e05500] text-white font-medium rounded-lg transition-all duration-200"
-            >
-              Confirm Appointment
-            </button>
-          </form>
-        </motion.div>
+            ))}
+          </select>
+          {errors.service && (
+            <p className="text-red-500 text-sm">{errors.service}</p>
+          )}
+
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full py-3 bg-[#f36100] hover:bg-[#e05500] text-white font-medium rounded-lg"
+          >
+            {loading ? "Booking..." : "Confirm Appointment"}
+          </button>
+
+          {success && (
+            <div className="flex items-center gap-2 text-green-600 mt-2">
+              <CheckCircle className="h-5 w-5" /> Appointment booked successfully!
+            </div>
+          )}
+        </motion.form>
       </div>
     </section>
   );

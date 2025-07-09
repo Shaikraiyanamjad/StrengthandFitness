@@ -8,6 +8,7 @@ import { FaYoutube } from "react-icons/fa";
 
 export default function Footer() {
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const [year, setYear] = useState<number | null>(null);
 
   useEffect(() => {
     const observer = new MutationObserver(() => {
@@ -15,6 +16,9 @@ export default function Footer() {
     });
     observer.observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
     setIsDarkMode(document.documentElement.classList.contains("dark"));
+
+    setYear(new Date().getFullYear());
+
     return () => observer.disconnect();
   }, []);
 
@@ -74,7 +78,7 @@ export default function Footer() {
 
       {/* Bottom Bar */}
       <div className="mt-12 border-t border-gray-300 dark:border-gray-700 pt-6 text-center text-sm text-gray-500 dark:text-gray-400">
-        &copy; {new Date().getFullYear()} StrengthAndExercise. All rights reserved.
+        &copy; {year ?? "..."} StrengthAndExercise. All rights reserved.
       </div>
     </footer>
   );
